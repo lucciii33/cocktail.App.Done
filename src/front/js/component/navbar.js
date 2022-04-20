@@ -68,11 +68,7 @@ export const Navbar = () => {
                     </li>
                   </ul>
                 )}
-                <Link to="/register" className="logo">
-                  <h5 className="m-2 logolinea " style={{ color: "#0F0C24" }}>
-                    Register
-                  </h5>
-                </Link>
+
                 {store.loggId.email ? (
                   <h5
                     className="m-1 logolinea "
@@ -81,12 +77,18 @@ export const Navbar = () => {
                   >
                     Logout
                   </h5>
-                ) : (
+                ) : (<div className="d-flex">
+                  <Link to="/register" className="logo">
+                    <h5 className="m-2 logolinea " style={{ color: "#0F0C24" }}>
+                      Register
+                    </h5>
+                  </Link>
                   <Link to="/signin" className="logo">
                     <h5 className="m-1 logolinea " style={{ color: "#0F0C24" }}>
                       Login
                     </h5>
                   </Link>
+                </div>
                 )}
               </nav>
             </li>

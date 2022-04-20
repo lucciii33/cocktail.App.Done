@@ -17,13 +17,15 @@ api = Blueprint('api', __name__)
 def create_token():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
-    if email != "test" or password != "test":
+    user = User.query.filter_by(email=email, password=password).first()
+    if user is None:
+        # the user was not found on the database
         return jsonify({"msg": "Bad username or password"}), 401
-
     access_token = create_access_token(identity=email)
-    return jsonify(access_token=access_token)
+    return jsonify({'access_token':access_token, 'email': email})
 
 @api.route('/favorite', methods=['GET'])
+@jwt_required()
 def get_favorite():
     
     favorite_query = Favorite.query.all()
@@ -32,6 +34,7 @@ def get_favorite():
     return jsonify(all_favorites), 200
 
 @api.route('/favorite', methods=['POST'])
+@jwt_required()
 def post_favorite():
     body = request.json
 
@@ -47,6 +50,7 @@ def post_favorite():
 
 #deberia ser drink_id?
 @api.route('/favorite/<int:id>', methods=['DELETE'])
+@jwt_required()
 def delete_favorite(id):
     favorite_id = Favorite.query.get(id)
     if favorite_id is None:
