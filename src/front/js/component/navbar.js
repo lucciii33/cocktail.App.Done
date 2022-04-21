@@ -77,7 +77,7 @@ export const Navbar = () => {
                   >
                     Logout
                   </h5>
-                ) : (<div className="d-flex">
+                ) : (<div className="d-flex align-items-baseline">
                   <Link to="/register" className="logo">
                     <h5 className="m-2 logolinea " style={{ color: "#0F0C24" }}>
                       Register
