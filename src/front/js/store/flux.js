@@ -82,17 +82,40 @@ const getState = ({ getStore, getActions, setStore }) => {
       logOut: () => {
         setStore({ loggId: {} });
       },
-      addFav: (fav) => {
+      addFav: (drinkID, drinkName, user_id) => {
         // get the store
-        let favorites = getStore().favorites;
-        const found = favorites.find((item) => item == fav);
+        // let favorites = getStore().favorites;
+        // const found = favorites.find((item) => item == fav);
+        // if (found) {
+        //   favorites = favorites.filter((element) => element !== fav);
+        // } else {
+        //   favorites.push(fav);
+        // }
+        // // reset the global store
+        // setStore({ favorites: favorites });
+        let favorite = getStore().favorites;
+        const found = favorite.find((item) => item == drinkID);
         if (found) {
-          favorites = favorites.filter((element) => element !== fav);
+          alert("That drink exist");
         } else {
-          favorites.push(fav);
+          let favoriteString = favorite.toString();
+          fetch(process.env.BACKEND_URL + "/api/favorite", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              drink_id: drinkID,
+              drink_name: drinkName,
+              user_id: user_id,
+              favorite_name: favoriteString,
+              // is_done: false,
+            }),
+          })
+            .then((response) => response.json())
+            .then((data) => setStore({ favorites: data }))
+            .catch((err) => console.log(err));
         }
-        // reset the global store
-        setStore({ favorites: favorites });
       },
 
       deleteFav: (fav) => {
