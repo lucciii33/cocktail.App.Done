@@ -83,6 +83,9 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore({ loggId: {} });
       },
       addFav: (drinkID, drinkName, user_id) => {
+        let token = sessionStorage.getItem("jwt-token");
+        // let token = sessionStorage.jwt - token
+        // console.log("this is the token", token)
         // get the store
         // let favorites = getStore().favorites;
         // const found = favorites.find((item) => item == fav);
@@ -103,6 +106,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
+              "Authorization": `Bearer ${token}`,
             },
             body: JSON.stringify({
               drink_id: drinkID,
