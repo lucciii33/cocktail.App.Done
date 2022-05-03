@@ -8,7 +8,7 @@ export const Cards = ({ rec }) => {
   const [icon, setIcon] = useState(false)
   const [addFav, setAddFav] = useState(0)
   var isFav = store.favorites.find(fav => fav.name == rec.strDrink);
-  console.log("isFave", isFav);
+  console.log("isFave", rec);
   const params = useParams();
   return (
     <div className="container">
@@ -33,7 +33,7 @@ export const Cards = ({ rec }) => {
             <div className="col-2">
               <span
                 onClick={() => {
-                  actions.addFav(rec);
+                  actions.addFav(rec.idDrink, rec.strDrink, store.loggId.user.id);
                   setIcon(!icon)
                 }}
 

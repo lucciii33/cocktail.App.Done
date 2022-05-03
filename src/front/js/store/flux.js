@@ -207,11 +207,11 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
 
         const data = await resp.json();
-
+        console.log("data", data)
         // save your token in the sessionStorage
-        sessionStorage.setItem("jwt-token", data.access_token);
         setStore({ loggId: data });
-        console.log(loggId)
+        sessionStorage.setItem("jwt-token", data.access_token);
+        // console.log(loggId)
         return data.access_token;
       },
 
