@@ -48,11 +48,11 @@ export const Navbar = () => {
                             <li key={i}>
                               <Link className="text-decoration-none"
                                 to={{
-                                  pathname: "information/" + fav.strDrink,
+                                  pathname: "information/" + fav.drink_name,
                                   state: fav,
                                 }}
                               >
-                                {fav.strDrink}
+                                {fav.drink_name}
                               </Link>
                               <i
                                 className="fas fa-trash-alt m-2"

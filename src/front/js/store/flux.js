@@ -82,6 +82,20 @@ const getState = ({ getStore, getActions, setStore }) => {
       logOut: () => {
         setStore({ loggId: {} });
       },
+
+      getFav: (id) => {
+        let token = sessionStorage.getItem("jwt-token");
+        fetch(process.env.BACKEND_URL + `/api/favorite/${id}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => setStore({ favorites: data }))
+          .catch((err) => console.log(err));
+      },
       addFav: (drinkID, drinkName, user_id) => {
         let token = sessionStorage.getItem("jwt-token");
         // let token = sessionStorage.jwt - token
@@ -101,7 +115,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         if (found) {
           alert("That drink exist");
         } else {
-          let favoriteString = favorite.toString();
           fetch(process.env.BACKEND_URL + "/api/favorite", {
             method: "POST",
             headers: {
@@ -112,7 +125,7 @@ const getState = ({ getStore, getActions, setStore }) => {
               drink_id: drinkID,
               drink_name: drinkName,
               user_id: user_id,
-              favorite_name: favoriteString,
+
               // is_done: false,
             }),
           })

@@ -19,6 +19,7 @@ def create_token():
     password = request.json.get("password", None)
     user = User.query.filter_by(email=email, password=password ).first()
     print(user.serialize())
+    print(user)
     if user is None:
         # the user was not found on the database
         return jsonify({"msg": "Bad username or password"}), 401
@@ -27,9 +28,18 @@ def create_token():
 
 @api.route('/favorite', methods=['GET'])
 @jwt_required()
-def get_favorite():
+def get_all_favorites():
     
     favorite_query = Favorite.query.all()
+    all_favorites = list(map(lambda x: x.serialize(),  favorite_query))
+    
+    return jsonify(all_favorites), 200
+
+@api.route('/favorite/<int:id>', methods=['GET'])
+@jwt_required()
+def get_favorite(id):
+    
+    favorite_query = Favorite.query.filter_by(user_id = id)
     all_favorites = list(map(lambda x: x.serialize(),  favorite_query))
     
     return jsonify(all_favorites), 200

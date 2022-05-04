@@ -37,7 +37,11 @@ export const SignIn = () => {
 							</div>
 							<div className="d-grid mx-auto mb-3" style={{ MaxWidth: '400px', height: 'auto' }}>
 								<Link to="recipebrowser">
-									<span onClick={() => actions.login(logInValues.email, logInValues.password)} className="button btn-lg " type='text' style={{ backgroundColor: '#C1436D', border: 'none' }} id="submitButton">Submit</span>
+									<span onClick={() => {
+										actions.login(logInValues.email, logInValues.password);
+										actions.getFav(1)
+
+									}} className="button btn-lg " type='text' style={{ backgroundColor: '#C1436D', border: 'none' }} id="submitButton">Submit</span>
 								</Link>
 							</div>
 						</form>
