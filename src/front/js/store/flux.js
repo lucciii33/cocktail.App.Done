@@ -84,12 +84,25 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       getFav: (id) => {
-        let token = sessionStorage.getItem("jwt-token");
+        let store = getStore()
         fetch(process.env.BACKEND_URL + `/api/favorite/${id}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`,
+            "Authorization": `Bearer ${store.loggId?.access_token}`,
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => setStore({ favorites: data }))
+          .catch((err) => console.log(err));
+      },
+      getAllFav: () => {
+        let store = getStore()
+        fetch(process.env.BACKEND_URL + `/api/favorite`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${store.loggId?.access_token}`,
           },
         })
           .then((response) => response.json())
@@ -97,7 +110,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           .catch((err) => console.log(err));
       },
       addFav: (drinkID, drinkName, user_id) => {
-        let token = sessionStorage.getItem("jwt-token");
+        let store = getStore()
         // let token = sessionStorage.jwt - token
         // console.log("this is the token", token)
         // get the store
@@ -119,7 +132,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              "Authorization": `Bearer ${token}`,
+              "Authorization": `Bearer ${store.loggId?.access_token}`,
             },
             body: JSON.stringify({
               drink_id: drinkID,
@@ -223,7 +236,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         console.log("data", data)
         // save your token in the sessionStorage
         setStore({ loggId: data });
-        sessionStorage.setItem("jwt-token", data.access_token);
+        sessionStorage.setItem("jwt-token", JSON.stringify(data));
         // console.log(loggId)
         return data.access_token;
       },
@@ -232,7 +245,14 @@ const getState = ({ getStore, getActions, setStore }) => {
         sessionStorage.removeItem("jwt-token");
         setStore({ loggId: null });
       },
-    },
+
+      retreiveSession: () => {
+
+        let strData = sessionStorage.getItem("jwt-token");
+        setStore({ loggId: JSON.parse(strData) });
+
+      },
+    }
   };
 };
 

@@ -26,7 +26,7 @@ export const Navbar = () => {
           <ul className="navbar-nav ms-auto mb-2 mb-lg-0 d-xs-block">
             <li className="nav-item ms-auto">
               <nav className="navbar m-2">
-                {store.loggId.email && (
+                {store.loggId && (
                   <ul className="navbar-nav ">
                     <li className="nav-item dropdown">
                       <h6
@@ -43,7 +43,7 @@ export const Navbar = () => {
                         className="dropdown-menu"
                         aria-labelledby="navbarDropdown"
                       >
-                        {store.favorites.map((fav, i) => {
+                        {store.favorites?.map((fav, i) => {
                           return (
                             <li key={i}>
                               <Link className="text-decoration-none"
@@ -69,7 +69,7 @@ export const Navbar = () => {
                   </ul>
                 )}
 
-                {store.loggId.email ? (
+                {store.loggId ? (
                   <h5
                     className="m-1 logolinea "
                     onClick={() => actions.logOut()}

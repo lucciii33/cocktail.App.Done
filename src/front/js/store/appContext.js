@@ -23,9 +23,11 @@ const injectContext = (PassedComponent) => {
     );
 
     useEffect(() => {
+      state.actions.retreiveSession()
       state.actions.fetchRes([]);
       state.actions.fetchNonAlcoholic();
       state.actions.fetchAlcoholic();
+      state.actions.getAllFav();
       window.store = state.store;
     }, []);
 

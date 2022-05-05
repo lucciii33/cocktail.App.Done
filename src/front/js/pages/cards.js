@@ -7,7 +7,7 @@ export const Cards = ({ rec }) => {
   const { store, actions } = useContext(Context);
   const [icon, setIcon] = useState(false)
   const [addFav, setAddFav] = useState(0)
-  var isFav = store.favorites.find(fav => fav.name == rec.strDrink);
+  var isFav = store.favorites?.find(fav => fav.name == rec.strDrink);
   console.log("isFave", rec);
   const params = useParams();
   return (

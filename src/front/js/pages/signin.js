@@ -39,7 +39,6 @@ export const SignIn = () => {
 								<Link to="recipebrowser">
 									<span onClick={() => {
 										actions.login(logInValues.email, logInValues.password);
-										actions.getFav(1)
 
 									}} className="button btn-lg " type='text' style={{ backgroundColor: '#C1436D', border: 'none' }} id="submitButton">Submit</span>
 								</Link>
