@@ -148,10 +148,21 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-      deleteFav: (fav) => {
-        var deleteFavo = getStore().favorites;
-        let delet = deleteFavo.filter((element) => element !== fav);
-        setStore({ favorites: delet });
+      deleteFav: (id) => {
+        let store = getStore()
+        fetch(process.env.BACKEND_URL + "/api/favorite/" + id, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${store.loggId?.access_token}`
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => setStore({ favorites: data }))
+          .catch((err) => console.log(err));
+        // var deleteFavo = getStore().favorites;
+        // let delet = deleteFavo.filter((element) => element !== fav);
+        // setStore({ favorites: delet });
       },
 
       //Metodo para actualizar el store...
