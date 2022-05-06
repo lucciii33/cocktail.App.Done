@@ -98,7 +98,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       getAllFav: () => {
         let store = getStore()
-        fetch(process.env.BACKEND_URL + `/api/favorite`, {
+        fetch(process.env.BACKEND_URL + `/api/favorite/`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

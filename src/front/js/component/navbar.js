@@ -43,7 +43,7 @@ export const Navbar = () => {
                         className="dropdown-menu"
                         aria-labelledby="navbarDropdown"
                       >
-                        {store.favorites?.map((fav, i) => {
+                        {store.favorites.map((fav, i) => {
                           return (
                             <li key={i}>
                               <Link className="text-decoration-none"
