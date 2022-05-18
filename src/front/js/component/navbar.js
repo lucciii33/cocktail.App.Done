@@ -44,12 +44,18 @@ export const Navbar = () => {
                         aria-labelledby="navbarDropdown"
                       >
                         {store.favorites.map((fav, i) => {
+                          let favo = store.recipe.find((item) => {
+                            if (fav.drinkID == item.id) {
+                              return item
+                            }
+
+                          })
                           return (
                             <li key={i}>
                               <Link className="text-decoration-none"
                                 to={{
-                                  pathname: "information/" + fav.drink_name,
-                                  state: fav,
+                                  pathname: "information/" + favo.drink_name,
+                                  state: favo,
                                 }}
                               >
                                 {fav.drink_name}
