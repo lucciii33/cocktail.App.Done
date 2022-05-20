@@ -102,7 +102,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${store.loggId?.access_token}`,
+            "Authorization": `Bearer${store.loggId?.access_token}`,
           },
         })
           .then((response) => response.json())
