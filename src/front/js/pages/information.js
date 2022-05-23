@@ -9,6 +9,7 @@ import { object } from "prop-types";
 import { element } from "prop-types";
 
 export const Information = ({ rec }) => {
+
   var rec = useLocation().state;
   const { store, actions } = useContext(Context);
   const [language, setLanguage] = useState("");
@@ -56,7 +57,9 @@ export const Information = ({ rec }) => {
   //   (item) => item.drink_id === rec.idDrink
   // );
 
-  // console.log("lalalala", ingIds);
+  console.log("rec", rec);
+  // console.log(store.recipe);
+
 
   return (
     <div className="container-fluid mt-3">
@@ -83,8 +86,8 @@ export const Information = ({ rec }) => {
                 {language == "italian"
                   ? rec.strInstructionsIT
                   : language == "german"
-                  ? rec.strInstructionsDE
-                  : rec.strInstructions}
+                    ? rec.strInstructionsDE
+                    : rec.strInstructions}
               </p>
               <h3>Ingredients</h3>
 

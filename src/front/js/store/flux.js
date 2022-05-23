@@ -98,11 +98,12 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       getAllFav: () => {
         let store = getStore()
-        fetch(process.env.BACKEND_URL + `/api/favorite/`, {
+        console.log(store.loggId)
+        fetch(process.env.BACKEND_URL + `/api/favorite`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer${store.loggId?.access_token}`,
+            "Authorization": `Bearer ${store.loggId?.access_token}`,
           },
         })
           .then((response) => response.json())

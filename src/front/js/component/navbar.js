@@ -5,6 +5,8 @@ import logoDrink from "../../img/the-drink-logo.png";
 
 export const Navbar = () => {
   const { store, actions } = useContext(Context);
+  console.log(store.favorites)
+  console.log(store.recipes);
   return (
     <nav className="navbar navbar-expand-lg navbar-light">
       <div className="container-fluid ">
@@ -44,17 +46,19 @@ export const Navbar = () => {
                         aria-labelledby="navbarDropdown"
                       >
                         {store.favorites.map((fav, i) => {
-                          let favo = store.recipe.find((item) => {
-                            if (fav.drinkID == item.id) {
+                          console.log(fav)
+                          let favo = store.recipes.find((item) => {
+                            if (fav.drink_id == item.idDrink) {
                               return item
                             }
 
                           })
+                          console.log(favo)
                           return (
                             <li key={i}>
                               <Link className="text-decoration-none"
                                 to={{
-                                  pathname: "information/" + favo.drink_name,
+                                  pathname: "/information/" + fav.drink_name,
                                   state: favo,
                                 }}
                               >
@@ -62,7 +66,7 @@ export const Navbar = () => {
                               </Link>
                               <i
                                 className="fas fa-trash-alt m-2"
-                                onClick={() => actions.deleteFav(fav)}
+                                onClick={() => actions.deleteFav(fav.id)}
                               ></i>
                             </li>
                           );

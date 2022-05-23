@@ -16,6 +16,13 @@ export const RecipeBrowser = ({ data }) => {
     fetchRes();
   };
 
+  useEffect(() => {
+    if (store.loggId?.access_token) {
+      actions.getAllFav()
+    }
+
+  }, [store.loggId]);
+
   return (
     <div className="">
       <div className="d-flex align-items-baseline justify-content-center">
