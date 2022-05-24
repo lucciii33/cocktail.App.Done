@@ -82,7 +82,7 @@ export const Navbar = () => {
                 {store.loggId ? (
                   <h5
                     className="m-1 logolinea "
-                    onClick={() => actions.logOut()}
+                    onClick={() => actions.logout()}
                     style={{ color: "#0F0C24" }}
                   >
                     Logout
