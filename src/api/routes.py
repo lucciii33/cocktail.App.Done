@@ -18,12 +18,13 @@ def create_token():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
     user = User.query.filter_by(email=email, password=password ).first()
-    print(user.serialize())
-    print(user)
+   
     if user is None:
         # the user was not found on the database
         return jsonify({"msg": "Bad username or password"}), 401
-    access_token = create_access_token(identity=email)
+    print(user.id)
+    access_token = create_access_token(identity=user.id)
+    
     return jsonify({'access_token':access_token, 'email': email, 'user': user.serialize()})
 
 @api.route('/favorite', methods=['GET'])
@@ -35,16 +36,16 @@ def get_all_favorites():
     
     return jsonify(all_favorites), 200
 
-@api.route('/favorite/<int:id>', methods=['GET'])
+@api.route('/favorite', methods=['GET'])
 @jwt_required()
-def get_favorite(id):
-    
+def get_favorite():
+    id = get_jwt_identity()
     favorite_query = Favorite.query.filter_by(user_id = id)
     all_favorites = list(map(lambda x: x.serialize(),  favorite_query))
     
     return jsonify(all_favorites), 200
 
-@api.route('/favorite', methods=['POST'])
+@api.route('/favorite/<int:id>', methods=['POST'])
 @jwt_required()
 def post_favorite():
     body = request.json
@@ -54,7 +55,7 @@ def post_favorite():
     db.session.add(favorite)
     db.session.commit()
 
-    favorites = Favorite.query.all()
+    favorites = Favorite.query.filter_by(user_id = id)
     all_favorites= list(map(lambda x: x.serialize(), favorites))
     
 
@@ -147,18 +148,15 @@ def get_user():
     
     return jsonify(all_users), 200
 
-@api.route('/user', methods=['POST'])
-def post_user():
+@api.route('/user/register', methods=['POST'])
+def register_user():
     body = request.json
 
     user = User(email=body['email'], password=body['password'] )
     db.session.add(user)
     db.session.commit()
 
-    users =user.query.all()
-    all_users= list(map(lambda x: x.serialize(), users))
-
-    return jsonify(all_users), 200
+    return jsonify({"message" : "your user has been registered"}), 200
 
 @api.route('/user', methods=['PUT'])
 def edit_user():

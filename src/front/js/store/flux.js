@@ -69,19 +69,19 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore({ alcoholic: localRecipes });
       },
 
-      registerUsers: (user) => {
-        const newUser = getStore().users;
-        newUser.push(user);
-        setStore({ users: newUser });
-      },
-      LogInUsers: (userLogged) => {
-        // const log = getStore().loggId;
-        // log.push(userLogged)
-        setStore({ loggId: userLogged });
-      },
-      logOut: () => {
-        setStore({ loggId: {} });
-      },
+      // registerUsers: (user) => {
+      //   const newUser = getStore().users;
+      //   newUser.push(user);
+      //   setStore({ users: newUser });
+      // },
+      // LogInUsers: (userLogged) => {
+      //   // const log = getStore().loggId;
+      //   // log.push(userLogged)
+      //   setStore({ loggId: userLogged });
+      // },
+      // logOut: () => {
+      //   setStore({ loggId: {} });
+      // },
 
       getFav: (id) => {
         let store = getStore()
@@ -98,7 +98,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       getAllFav: () => {
         let store = getStore()
-        console.log(store.loggId)
         fetch(process.env.BACKEND_URL + `/api/favorite`, {
           method: "GET",
           headers: {
@@ -112,18 +111,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       addFav: (drinkID, drinkName, user_id) => {
         let store = getStore()
-        // let token = sessionStorage.jwt - token
-        // console.log("this is the token", token)
-        // get the store
-        // let favorites = getStore().favorites;
-        // const found = favorites.find((item) => item == fav);
-        // if (found) {
-        //   favorites = favorites.filter((element) => element !== fav);
-        // } else {
-        //   favorites.push(fav);
-        // }
-        // // reset the global store
-        // setStore({ favorites: favorites });
         let favorite = getStore().favorites;
         const found = favorite.find((item) => item == drinkID);
         if (found) {
@@ -248,7 +235,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         console.log("data", data)
         // save your token in the sessionStorage
         setStore({ loggId: data });
-        sessionStorage.setItem("jwt-token", JSON.stringify(data));
+        sessionStorage.setItem("jwt-token", data);
         // console.log(loggId)
         return data.access_token;
       },
@@ -261,9 +248,27 @@ const getState = ({ getStore, getActions, setStore }) => {
       retreiveSession: () => {
 
         let strData = sessionStorage.getItem("jwt-token");
+        console.log(strData)
+        console.log(JSON.parse(strData))
         setStore({ loggId: JSON.parse(strData) });
 
       },
+
+      registerUser: async (email, password) => {
+        const resp = await fetch(`${process.env.BACKEND_URL}/api/user/register`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password })
+        });
+
+        if (!resp.ok) throw "Problem with the response";
+
+        if (resp.status === 401) {
+          throw "Invalid credentials";
+        } else if (resp.status === 400) {
+          throw "Invalid email or password format";
+        }
+      }
     }
   };
 };
