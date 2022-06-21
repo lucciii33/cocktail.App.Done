@@ -96,19 +96,19 @@ const getState = ({ getStore, getActions, setStore }) => {
           .then((data) => setStore({ favorites: data }))
           .catch((err) => console.log(err));
       },
-      getAllFav: () => {
-        let store = getStore()
-        fetch(process.env.BACKEND_URL + `/api/favorite`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${store.loggId?.access_token}`,
-          },
-        })
-          .then((response) => response.json())
-          .then((data) => setStore({ favorites: data }))
-          .catch((err) => console.log(err));
-      },
+      // getAllFav: () => {
+      //   let store = getStore()
+      //   fetch(process.env.BACKEND_URL + `/api/favorite`, {
+      //     method: "GET",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //       "Authorization": `Bearer ${store.loggId?.access_token}`,
+      //     },
+      //   })
+      //     .then((response) => response.json())
+      //     .then((data) => setStore({ favorites: data }))
+      //     .catch((err) => console.log(err));
+      // },
       addFav: (drinkID, drinkName, user_id) => {
         let store = getStore()
         let favorite = getStore().favorites;

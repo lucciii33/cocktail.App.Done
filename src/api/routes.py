@@ -36,14 +36,14 @@ def get_all_favorites():
     
     return jsonify(all_favorites), 200
 
-@api.route('/favorite', methods=['GET'])
+@api.route('/favorite/<int:id>', methods=['GET'])
 @jwt_required()
-def get_favorite():
-    id = get_jwt_identity()
-    favorite_query = Favorite.query.filter_by(user_id = id)
-    all_favorites = list(map(lambda x: x.serialize(),  favorite_query))
+def get_favorite(id):
+    # id = get_jwt_identity()
+    favorite_query = Favorite.query.filter_by(id)
+
     
-    return jsonify(all_favorites), 200
+    return jsonify(favorite_query.serialize()), 200
 
 @api.route('/favorite/<int:id>', methods=['POST'])
 @jwt_required()

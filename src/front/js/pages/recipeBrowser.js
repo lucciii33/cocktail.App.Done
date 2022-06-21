@@ -18,7 +18,7 @@ export const RecipeBrowser = ({ data }) => {
 
   useEffect(() => {
     if (store.loggId?.access_token) {
-      actions.getAllFav()
+      actions.getFav()
     }
 
   }, [store.loggId]);
